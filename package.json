@@ -1,12 +1,12 @@
 {
   "name": "@trieb.work/voyager-api",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "description": "A node.js client library for the LinkedIn voyager API",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
     "test": "jest --coverage",
-    "build": "tsc --module commonjs" 
+    "build": "tsc --module commonjs"
   },
   "author": "JannikZ",
   "license": "ISC",
