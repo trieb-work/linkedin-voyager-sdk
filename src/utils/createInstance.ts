@@ -3,11 +3,12 @@ import  axios from 'axios'
 
 
 
-// create the axios instance
 
+/**
+ * Creates the axios instance that gets used for all following API calls.
+ */
 export const createInstance = () => {
  
-
     if (!GlobalcsrfToken) throw new Error('No CSRF Token found. Set it first with the init function')
 
     let headers = {
