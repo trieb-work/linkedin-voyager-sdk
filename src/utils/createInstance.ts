@@ -1,4 +1,4 @@
-import { GlobalSessionCookies, GlobalcsrfToken, GlobalUserAgent } from '../index'
+import { GlobalUserAgent, GlobalSessionCookies, GlobalcsrfToken } from '../globals'
 import  axios from 'axios'
 
 
