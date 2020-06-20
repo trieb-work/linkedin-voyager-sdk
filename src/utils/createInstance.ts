@@ -1,4 +1,4 @@
-import { GlobalUserAgent, GlobalSessionCookies, GlobalcsrfToken } from '../globals'
+import { GlobalUserAgent, GlobalSessionCookies, GlobalcsrfToken, GlobalCountry } from '../globals'
 import  axios from 'axios'
 
 
@@ -32,5 +32,32 @@ export const createInstance = () => {
         withCredentials: true
     })
 
+
+}
+
+/**
+ * Create the axios instance used to scrap all profile IDs from the directory pages
+ */
+export const createProfileDirectoryInstance = () => {
+
+    let headers = {
+        "accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9",
+        "accept-language": "en-GB,en-US;q=0.9,en;q=0.8,de;q=0.7",
+        "cache-control": "no-cache",
+        "pragma": "no-cache",
+        "sec-fetch-dest": "document",
+        "sec-fetch-mode": "navigate",
+        "sec-fetch-site": "none",
+        "sec-fetch-user": "?1",
+        "upgrade-insecure-requests": "1",
+        "cookie": GlobalSessionCookies,
+        "user-agent": GlobalUserAgent
+    }
+
+    return axios.create({
+        baseURL: `https://${GlobalCountry}.linkedin.com/directory/`,
+        headers,
+        withCredentials: true
+    })
 
 }

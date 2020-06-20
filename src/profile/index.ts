@@ -1,21 +1,33 @@
-import { createInstance } from '../utils/createInstance'
+import { createInstance, createProfileDirectoryInstance } from '../utils/createInstance'
+import cheerio from 'cheerio'
 
 interface returnData {
     id: string
 }
+
+let Globalinstance
 
 export  async function getFullProfile({id}){
     const instance = createInstance()
 
  
 
+    /**
+     * the profileView request gives you a full profile with Jobs, certificates, skills, etc..
+     */
     let result = await instance.get(`https://www.linkedin.com/voyager/api/identity/profiles/${id}/profileView`)
     if (result.status !== 200) throw new Error('Wrong response from LinkedIn')
     let profileArray = result.data.included
+    const profileView = result.data
 
+
+    /**
+     * the profileContactInfo offers data like email address, phone numbers etc..
+     */
     let resultContactInfo = await instance.get(`https://www.linkedin.com/voyager/api/identity/profiles/${id}/profileContactInfo`)
     if (resultContactInfo.status !== 200) throw new Error('Wrong response from LinkedIn')
     let resultContactInfoData = resultContactInfo.data['data']
+    const profileContactInfo = resultContactInfo.data['data']
 
     // this array gives us the sorting of the positions. The first element is the current position
     const positionSort = profileArray.find(x => x.$type === "com.linkedin.voyager.identity.profile.PositionView")["*elements"]
@@ -43,8 +55,9 @@ export  async function getFullProfile({id}){
         Website: website
     }
 
+    const rawProfile = { profileView,  profileContactInfo }
 
-    return { ZohoCRMprofile: profile }
+    return { ZohoCRMprofile: profile, rawProfile }
 
     
 }
@@ -64,6 +77,44 @@ export async function getMe(){
 
     return data
 
+}
 
+/**
+ * This function takes the current letter or prefix (like a,b,c,....) and the current page (1,2,3,4 ...) and returns an array
+ * of profile IDs back.
+ * @param prefix 
+ * @param page 
+ */
+export async function getProfileIds(prefix :string, page :number){
+    let instance
+    if (Globalinstance) {
+        instance = Globalinstance
+    } else {
+        instance = createProfileDirectoryInstance()
+    }
+    const url = await instance.get('/people-'+prefix+'-'+page )
+    if (url.status !== 200) throw new Error('Wrong response code from LinkedIn')
+    
+    const ids = getProfileIdsFromHtml(url.data)
+    if (typeof ids !== 'object' ) throw new Error('Parsing IDs from HTML failed. Maybe LinkedIn changed their page layout?')
+    
+    return ids
 
 }
+
+/**
+ * a helper function that parses profile IDs from a profile directory page.
+ * @param html The plain HTML file of the page
+ */
+function getProfileIdsFromHtml(html){
+    var $ = cheerio.load(html)
+    var profileids = []
+    const elemProfileIdPos = $('ul.column li a')
+    for(let i=0; i<elemProfileIdPos.length; i++){
+      let href = $(elemProfileIdPos[i]).attr('href')
+      let match = href.match('/in/(.*)')
+      let profileid = match ? match[1].split('?')[0] : undefined
+      if (profileid) profileids.push(profileid)
+    }
+    return profileids
+  }

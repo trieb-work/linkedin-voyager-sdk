@@ -8,7 +8,8 @@ export interface Incoming {
   cookieObject? :{name :string, value :string}[],
   cookieString? :string,
   csrftoken? :string,
-  userAgent :string
+  userAgent :string,
+  country? :string
 }
 
 /**
@@ -19,12 +20,13 @@ export interface Incoming {
  * @param {string} param0.UserAgent The user-agent we should use to call the API.
  * @param {object} param0
  */
-export default function Init({ cookieObject, cookieString, csrftoken, userAgent } :Incoming){
+export default function Init({ cookieObject, cookieString, csrftoken, userAgent, country } :Incoming){
     
     // set the session cookie globally. We join the array together to be just a cookie string
     const SessionCookies = cookieString ? cookieString : cookieObject ? cookieObject.map(x => x.name+'='+x.value).join('; ') : ''
 
     let csrfToken :string
+
 
     if (csrftoken) {
         csrfToken = csrftoken
@@ -36,7 +38,7 @@ export default function Init({ cookieObject, cookieString, csrftoken, userAgent 
 
     }
 
-    Set({csrftoken: csrfToken, SessionCookies, userAgent})
+    Set({csrftoken: csrfToken, SessionCookies, userAgent, country})
   
 
 
