@@ -38,7 +38,7 @@ export  async function getFullProfile({id}){
     let currentProfile = profileArray.find( (x: { $type: string }) => x.$type === "com.linkedin.voyager.identity.profile.Profile")
 
     const city = currentProfile.locationName.split(',')[0] || null
-    const website = resultContactInfoData.websites ? resultContactInfoData.websites.find(x => x.type.category === 'COMPANY').url : null
+    const website = resultContactInfoData.websites ? getWebsite(resultContactInfoData.websites) : null
     let profile = {
         Last_Name: currentProfile.lastName,
         First_Name: currentProfile.firstName,
@@ -117,4 +117,14 @@ function getProfileIdsFromHtml(html){
       if (profileid) profileids.push(profileid)
     }
     return profileids
-  }
+}
+/**
+ * Little helper to extract a website - first priority company website
+ * @param websites 
+ */
+function getWebsite(websites){
+    const Company = websites.find(x => x.type.category === 'COMPANY')
+    if (Company) return Company.url
+    return websites[0].url
+
+}

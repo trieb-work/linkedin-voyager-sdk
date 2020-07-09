@@ -57,7 +57,8 @@ export const createProfileDirectoryInstance = () => {
     return axios.create({
         baseURL: `https://${GlobalCountry}.linkedin.com/directory/`,
         headers,
-        withCredentials: true
+        withCredentials: true,
+        timeout: 5000
     })
 
 }

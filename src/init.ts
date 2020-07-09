@@ -5,11 +5,11 @@ import Set from './globals'
 */ 
 
 export interface Incoming {
-  cookieObject? :{name :string, value :string}[],
-  cookieString? :string,
-  csrftoken? :string,
-  userAgent :string,
-  country? :string
+  cookieObject? :{name :string, value :string}[];
+  cookieString? :string;
+  csrftoken? :string;
+  userAgent :string;
+  country? :"de" | "es" | "www";
 }
 
 /**
