@@ -1,6 +1,6 @@
 {
   "name": "@trieb.work/voyager-api",
-  "version": "1.0.10",
+  "version": "1.0.11",
   "description": "A node.js client library for the LinkedIn voyager API",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
