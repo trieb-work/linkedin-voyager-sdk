@@ -15,7 +15,7 @@ export  async function getFullProfile({id}){
     /**
      * the profileView request gives you a full profile with Jobs, certificates, skills, etc..
      */
-    let result = await instance.get(`/identity/profiles/${id}/profileView`)
+    let result = await instance.get(`/identity/profiles/${encodeURIComponent(id)}/profileView`)
     if (result.status !== 200) throw new Error('Wrong response from LinkedIn')
     let profileArray = result.data.included
     const profileView = result.data
@@ -24,7 +24,7 @@ export  async function getFullProfile({id}){
     /**
      * the profileContactInfo offers data like email address, phone numbers etc..
      */
-    let resultContactInfo = await instance.get(`/identity/profiles/${id}/profileContactInfo`)
+    let resultContactInfo = await instance.get(`/identity/profiles/${encodeURIComponent(id)}/profileContactInfo`)
     if (resultContactInfo.status !== 200) throw new Error('Wrong response from LinkedIn')
     let resultContactInfoData = resultContactInfo.data['data']
     const profileContactInfo = resultContactInfo.data['data']

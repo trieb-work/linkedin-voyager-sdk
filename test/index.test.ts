@@ -9,7 +9,7 @@ import values from './test_values'
 
 const userAgent = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.61 Safari/537.36"
 const cookieObject = values.cookieObject
-const profileId = { id: 'ilham-kadri'}
+const profileId = { id: 'saskiakaufhold'}
 
 describe("Real API test", () => {
     it("tests if we can pull a profile successfully", async () => {

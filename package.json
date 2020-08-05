@@ -12,7 +12,7 @@
   "license": "ISC",
   "repository": {
     "type": "git",
-    "url": "https://gitlab.com/trieb.work/linkedin-voyager-api.git"
+    "url": "https://github.com/trieb-work/linkedin-voyager-sdk.git"
   },
   "jest": {
     "transform": {
@@ -46,9 +46,9 @@
     "cheerio": "^1.0.0-rc.3"
   },
   "devDependencies": {
-    "@types/jest": "^26.0.0",
-    "jest": "^26.0.1",
-    "ts-jest": "^26.1.0",
-    "typescript": "^3.9.3"
+    "@types/jest": "^26.0.8",
+    "jest": "^26.2.2",
+    "ts-jest": "^26.1.4",
+    "typescript": "^3.9.7"
   }
 }
