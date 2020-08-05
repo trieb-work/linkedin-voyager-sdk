@@ -1,7 +1,7 @@
 import { GlobalUserAgent, GlobalSessionCookies, GlobalcsrfToken, GlobalCountry } from '../globals'
 import  axios from 'axios'
 
-
+const baseUrl = process.env.BASE_URL || 'https://www.linkedin.com/voyager/api'
 
 
 /**
@@ -27,7 +27,7 @@ export const createInstance = () => {
  
 
     return axios.create({
-        baseURL: 'https://www.linkedin.com/voyager/api',
+        baseURL: baseUrl,
         headers,
         withCredentials: true
     })
