@@ -37,7 +37,7 @@ export  async function getFullProfile({id}){
 
     let currentProfile = profileArray.find( (x: { $type: string }) => x.$type === "com.linkedin.voyager.identity.profile.Profile")
 
-    const city = currentProfile.locationName.split(',')[0] || null
+    const city = currentProfile?.locationName?.split(',')[0] || null
     const website = resultContactInfoData.websites ? getWebsite(resultContactInfoData.websites) : null
     let profile = {
         Last_Name: currentProfile.lastName,
